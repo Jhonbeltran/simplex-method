@@ -26,7 +26,9 @@ class Simplex(object):
         self.constraints = constraints
         self.objective = objective_function[0]
         self.objective_function = objective_function[1]
+
         self.coeff_matrix, self.r_rows, self.num_s_vars, self.num_r_vars = self.construct_matrix_from_constraints()
+
         del self.constraints
         self.basic_vars = [0 for i in range(len(self.coeff_matrix))]
         self.phase1()
