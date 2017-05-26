@@ -26,10 +26,23 @@ class Simplex(object):
         self.constraints = constraints
         self.objective = objective_function[0]
         self.objective_function = objective_function[1]
+        print('Número de variables = {}'.format(self.num_vars))
+        print('Restricciones = {}'.format(self.constraints))
+        print('Objetivo: {}'.format(self.objective))
+        print('Función objetivo = {}'.format(self.objective_function))
 
         self.coeff_matrix, self.r_rows, self.num_s_vars, self.num_r_vars = self.construct_matrix_from_constraints()
-
+        print('Ahora la matriz de coeficientes tiene los valores de: ')
+        for i in range(len(self.coeff_matrix)):
+            print(self.coeff_matrix[i])
+        print('Filas r_rows = {}'.format(self.r_rows))
+        print('Número de variables S {}'.format(self.num_s_vars))
+        print('Número de variables R {}'.format(self.num_r_vars))
+        
+        print('Valor de self.constrains antes de usar del {}'.format(self.constraints))
         del self.constraints
+        print('Borramos la variable self.constraints')
+
         self.basic_vars = [0 for i in range(len(self.coeff_matrix))]
         self.phase1()
         r_index = self.num_r_vars + self.num_s_vars
@@ -48,6 +61,7 @@ class Simplex(object):
         self.optimize_val = self.coeff_matrix[0][-1]
 
     def construct_matrix_from_constraints(self):
+        print('Entra a la Función construct_matrix_for_constrains')
         num_s_vars = 0  # number of slack and surplus variables
         num_r_vars = 0  # number of additional variables to balance equality and less than equal to
         for expression in self.constraints:
@@ -63,6 +77,10 @@ class Simplex(object):
         total_vars = self.num_vars + num_s_vars + num_r_vars
 
         coeff_matrix = [[Fraction("0/1") for i in range(total_vars+1)] for j in range(len(self.constraints)+1)]
+        print('Aparece la matriz de coeficientes con: ')
+        for i in range(len(coeff_matrix)):
+            print(coeff_matrix[i])
+
         s_index = self.num_vars
         r_index = self.num_vars + num_s_vars
         r_rows = [] # stores the non -zero index of r
@@ -101,6 +119,7 @@ class Simplex(object):
     def phase1(self):
         # Objective function here is minimize r1+ r2 + r3 + ... + rn
         r_index = self.num_vars + self.num_s_vars
+        print('La variable r_index tiene el valor de: {}'.format(r_index))
         for i in range(r_index, len(self.coeff_matrix[0])-1):
             self.coeff_matrix[0][i] = Fraction("-1/1")
         coeff_0 = 0
