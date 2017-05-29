@@ -22,6 +22,10 @@ class Simplex(object):
 
         For solution finding algorithm uses two-phase simplex method
         """
+        print('')
+        print('##############################INICIO###############################')
+        print('##############################SIMPLEX##############################')
+        print('')
         self.num_vars = num_vars
         self.constraints = constraints
         self.objective = objective_function[0]
@@ -62,6 +66,7 @@ class Simplex(object):
         self.optimize_val = self.coeff_matrix[0][-1]
 
     def construct_matrix_from_constraints(self):
+        print('')
         print('>>>>> ENTRA A LA FUNCION construct_matrix_from_constrains <<<<<')
         num_s_vars = 0  # number of slack and surplus variables
         num_r_vars = 0  # number of additional variables to balance equality and less than equal to
@@ -81,6 +86,7 @@ class Simplex(object):
             elif '=' in expression:
                 num_r_vars += 1
 
+        print('')
         print('Recordemos el numero de variables {}'.format(self.num_vars))
         print('Ahora tenemos {} variables s'.format(num_s_vars))
         print('Y tenemos {} variables r'.format(num_r_vars))
@@ -90,15 +96,21 @@ class Simplex(object):
         coeff_matrix = [[Fraction("0/1") for i in range(total_vars+1)] for j in range(len(self.constraints)+1)]
         print('La matriz de coeficientes es de {} x {}'.format(total_vars+1, len(self.constraints)+1))
         print('Se genera a partir del total de variables mas uno por la cantidad de restricciones mas uno')
+        print('')
         print('Aparece la matriz de coeficientes con: ')
+        
         for i in range(len(coeff_matrix)):
             print(coeff_matrix[i])
+        
         print('|||| Recordar que Fraction[0, 1] es igual a 0 es decir es un número a modo de fracción en python ||||')
 
+        print('')
         s_index = self.num_vars
         print('S index: {} que es igual a num vars con {}'.format(s_index, self.num_vars))
         r_index = self.num_vars + num_s_vars
         print('R index: {} que surge a partir de sumar numero de variables mas las variables s'.format(r_index))
+        print('')
+
         r_rows = [] # stores the non -zero index of r
         for i in range(1, len(self.constraints)+1):
             constraint = self.constraints[i-1].split(' ')
